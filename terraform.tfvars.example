@@ -1,0 +1,9 @@
+project_name     = "wordpress"
+environment      = "lab"
+aws_region       = "us-east-1"
+domain_name      = "wordpress.example.com"
+hosted_zone_name = "example.com"
+
+tags = {
+  Owner = "victor-dias21"
+}
