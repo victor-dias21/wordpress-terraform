@@ -109,3 +109,26 @@ variable "force_destroy_bucket" {
   type        = bool
   default     = false
 }
+
+variable "ami_id" {
+  description = "AMI Amazon Linux 2023 usada pela instancia WordPress."
+  type        = string
+}
+
+variable "instance_type" {
+  description = "Tipo da instancia EC2 do WordPress."
+  type        = string
+  default     = "t3.micro"
+}
+
+variable "key_name" {
+  description = "Nome opcional do key pair para acesso SSH."
+  type        = string
+  default     = null
+}
+
+variable "root_volume_size" {
+  description = "Tamanho do volume root da instancia WordPress em GiB."
+  type        = number
+  default     = 20
+}

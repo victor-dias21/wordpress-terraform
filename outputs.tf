@@ -32,3 +32,13 @@ output "database_secret_arn" {
   description = "ARN do secret gerenciado pelo RDS para o usuario master."
   value       = module.wordpress_database.db_instance_master_user_secret_arn
 }
+
+output "wordpress_instance_id" {
+  description = "ID da instancia EC2 do WordPress."
+  value       = module.wordpress_instance.id
+}
+
+output "wordpress_public_dns" {
+  description = "DNS publico da instancia WordPress."
+  value       = module.wordpress_instance.public_dns
+}

@@ -1,0 +1,31 @@
+#!/bin/bash
+set -euo pipefail
+
+dnf update -y
+dnf install -y httpd php php-cli php-common php-mysqlnd php-gd php-xml php-mbstring php-json mariadb105 awscli jq tar gzip
+
+systemctl enable --now httpd
+
+cd /tmp
+curl -fsSLO https://wordpress.org/latest.tar.gz
+tar -xzf latest.tar.gz
+rsync -a /tmp/wordpress/ /var/www/html/
+chown -R apache:apache /var/www/html
+find /var/www/html -type d -exec chmod 755 {} \;
+find /var/www/html -type f -exec chmod 644 {} \;
+
+secret_json="$(aws secretsmanager get-secret-value --region "${aws_region}" --secret-id "${db_secret_arn}" --query SecretString --output text)"
+db_password="$(echo "$secret_json" | jq -r '.password')"
+
+cp /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
+sed -i "s/database_name_here/${db_name}/" /var/www/html/wp-config.php
+sed -i "s/username_here/${db_username}/" /var/www/html/wp-config.php
+sed -i "s/password_here/$db_password/" /var/www/html/wp-config.php
+sed -i "s/localhost/${db_endpoint}/" /var/www/html/wp-config.php
+
+cat >/etc/profile.d/wordpress-lab.sh <<'EOF'
+export WORDPRESS_ASSETS_BUCKET="${s3_bucket_name}"
+export WORDPRESS_URL="${wordpress_url}"
+EOF
+
+systemctl restart httpd
