@@ -42,3 +42,13 @@ output "wordpress_public_dns" {
   description = "DNS publico da instancia WordPress."
   value       = module.wordpress_instance.public_dns
 }
+
+output "cloudfront_domain_name" {
+  description = "Dominio gerado pelo CloudFront."
+  value       = module.wordpress_cdn.cloudfront_distribution_domain_name
+}
+
+output "route53_zone_id" {
+  description = "ID da zona publica criada no Route 53."
+  value       = module.wordpress_dns.id
+}
