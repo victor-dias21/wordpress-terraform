@@ -4,6 +4,13 @@ aws_region       = "us-east-1"
 domain_name      = "wordpress.example.com"
 hosted_zone_name = "example.com"
 
+vpc_cidr              = "10.40.0.0/16"
+availability_zones    = ["us-east-1a", "us-east-1b"]
+public_subnet_cidrs   = ["10.40.0.0/24", "10.40.1.0/24"]
+private_subnet_cidrs  = ["10.40.10.0/24", "10.40.11.0/24"]
+database_subnet_cidrs = ["10.40.20.0/24", "10.40.21.0/24"]
+ssh_allowed_cidrs     = ["203.0.113.10/32"]
+
 tags = {
   Owner = "victor-dias21"
 }
