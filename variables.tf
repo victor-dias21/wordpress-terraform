@@ -132,3 +132,9 @@ variable "root_volume_size" {
   type        = number
   default     = 20
 }
+
+variable "cloudfront_price_class" {
+  description = "Price class da distribuicao CloudFront."
+  type        = string
+  default     = "PriceClass_100"
+}
